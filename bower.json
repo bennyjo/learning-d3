@@ -1,0 +1,13 @@
+{
+  "name": "learning-d3",
+  "version": "0.0.0",
+  "main": "index.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "devDependencies": {
+    "d3": "~3.2.4"
+  }
+}
