@@ -1,18 +1,14 @@
 var svg = d3.select("body").append("svg");
-var dataset = [
-	[5, 20],
-	[480, 90],
-	[250, 50],
-	[100, 33],
-	[330, 95],
-	[410, 12],
-	[475, 44],
-	[25, 67],
-	[85, 21],
-	[220, 88],
-	[52, 200],
-	[04, 320]
-];
+//Dynamic, random dataset
+var dataset = [];
+var numDataPoints = 50;
+var xRange = Math.random() * 1000;
+var yRange = Math.random() * 1000;
+for (var i = 0; i < numDataPoints; i++) {
+	var newNumber1 = Math.round(Math.random() * xRange);
+	var newNumber2 = Math.round(Math.random() * yRange);
+	dataset.push([newNumber1, newNumber2]);
+}
 var w = window.outerWidth,
 	h = window.outerHeight;
 var xScale = d3.scale.linear();
@@ -22,6 +18,16 @@ var colorScale = d3.scale.linear();
 var padding = 40;
 var w = window.outerWidth - padding,
 	h = window.outerHeight - padding;
+
+var xAxis = d3.svg.axis()
+				.scale(xScale)
+				.orient('bottom')
+				.ticks(20);
+
+var yAxis = d3.svg.axis()
+				.scale(yScale)
+				.orient('left')
+				.ticks(10);
 
 // Setup scales
 colorScale.domain([0, d3.max(dataset, function(d) {
@@ -51,6 +57,16 @@ var circles = svg.selectAll("circle")
 	.data(dataset)
 	.enter()
 	.append("circle");
+
+svg.append('g')
+	.attr('class', 'axis')
+	.attr("transform", "translate(0," + (h - padding) + ")")
+	.call(xAxis);
+
+svg.append('g')
+	.attr('class', 'axis')
+	.attr("transform", "translate(" + padding + ",0)")
+	.call(yAxis);
 
 circles.attr("cx", function(d) {
 		return xScale(d[0]);
